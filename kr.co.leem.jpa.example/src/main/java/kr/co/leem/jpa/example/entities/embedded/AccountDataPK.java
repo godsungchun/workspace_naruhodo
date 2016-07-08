@@ -6,6 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * AccountDTO
+ *
+ * Created by Dream on 2016-06-20.
+ */
 @Embeddable
 public class AccountDataPK implements Serializable {
 	private static final long serialVersionUID = 7262204439361258422L;
