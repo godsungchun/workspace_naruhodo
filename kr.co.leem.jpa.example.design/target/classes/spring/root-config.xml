@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="kr.co.leem">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="basenames">
+			<list>
+				<value>properties/resource</value>
+			</list>
+		</property>
+		<property name="cacheSeconds" value="5"/>
+	</bean>
+
+	<context:property-placeholder location="classpath:properties/db.properties"/>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database"><value>${entityManager.database}</value></property>
+				<property name="generateDdl"><value>${entityManager.generateDdl}</value></property>
+				<property name="showSql"><value>${entityManager.showSql}</value></property>
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="DefaultGenesis" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="database.mysql.engine">InnoDB</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
+		<property name="url"><value>${jdbc.url}</value></property>
+		<property name="username"><value>${jdbc.username}</value></property>
+		<property name="password"><value>${jdbc.password}</value></property>
+
+		<property name="validationQuery" value="SELECT 1 FROM DUAL"></property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- Base Repository -->
+	<jpa:repositories base-package="kr.co.leem.jpa.example.repositories"/>
+</beans>
