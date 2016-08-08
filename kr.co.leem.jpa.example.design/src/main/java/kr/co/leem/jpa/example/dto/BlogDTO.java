@@ -44,8 +44,6 @@ public class BlogDTO {
 
 		blogContents.setSeq(this.blogContentsSeq);
 		blogContents.setContents(this.contents);
-		blogContents.setTitle(this.title);
-		blogContents.setSubTitle(this.subTitle);
 
 		return blogContents;
 	}
