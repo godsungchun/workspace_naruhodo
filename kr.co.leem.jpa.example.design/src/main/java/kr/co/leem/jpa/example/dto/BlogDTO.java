@@ -1,5 +1,6 @@
 package kr.co.leem.jpa.example.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import kr.co.leem.jpa.example.entities.blog.BlogCategoryContentsRelation;
 import kr.co.leem.jpa.example.entities.blog.BlogContents;
 import kr.co.leem.jpa.example.entities.blog.BlogTag;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by Dream on 2016-07-22.
  */
+@JsonDeserialize
 public class BlogDTO {
 	private Long blogContentsSeq;
 	private Long blogCategorySeq;
@@ -46,6 +48,24 @@ public class BlogDTO {
 		blogContents.setSubTitle(this.subTitle);
 
 		return blogContents;
+	}
+
+	public List<BlogTag> dtoToBlogTags(Long blogContentsSeq) throws Exception {
+		List<BlogTag> blogTags = null;
+
+		if (blogTags != null && blogTags.size() > 0) {
+			blogTags = new ArrayList<>();
+
+			for (int i = 0; i < this.blogTags.size(); i++) {
+				BlogTag blogTag = new BlogTag();
+
+				blogTag.setContentsSeq(blogContentsSeq);
+				blogTag.setTag(this.blogTags.get(i));
+				blogTags.add(blogTag);
+			}
+		}
+
+		return blogTags;
 	}
 
 	public List<BlogTag> dtoToBlogTags() throws Exception {

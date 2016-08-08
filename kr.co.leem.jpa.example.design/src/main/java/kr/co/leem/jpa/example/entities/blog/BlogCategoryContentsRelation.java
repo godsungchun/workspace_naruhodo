@@ -23,6 +23,12 @@ public class BlogCategoryContentsRelation implements Serializable {
 	@MapKey(name = "categorySeq")
 	private BlogCategory blogCategory;
 
+	@Column(name = "title", nullable = false)
+	private String title;
+
+	@Column(name = "subTitle", length = 500)
+	private String subTitle;
+
 	@ManyToOne(targetEntity = BlogCategory.class)
 	@MapKey(name = "contentsSeq")
 	private BlogContents blogContents;
@@ -69,6 +75,22 @@ public class BlogCategoryContentsRelation implements Serializable {
 
 	public void setBlogCategory(BlogCategory blogCategory) {
 		this.blogCategory = blogCategory;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
 	}
 
 	public BlogContents getBlogContents() {

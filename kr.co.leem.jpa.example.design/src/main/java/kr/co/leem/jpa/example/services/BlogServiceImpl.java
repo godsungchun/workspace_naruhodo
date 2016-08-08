@@ -44,6 +44,7 @@ public class BlogServiceImpl implements BlogService {
 		} else {
 			BlogContents blogContents = blogDTO.dtoToBlogContents();
 			BlogContents resultBlogContents = blogContentsRepository.save(blogContents);
+//			blogTagRepository.save()
 		}
 	}
 }

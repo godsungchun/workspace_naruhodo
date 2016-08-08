@@ -25,12 +25,6 @@ public class BlogContents implements Serializable {
 	@Column(name = "seq")
 	private Long seq;
 
-	@Column(name = "title", nullable = false)
-	private String title;
-
-	@Column(name = "subTitle", length = 500)
-	private String subTitle;
-
 	@Lob
 	@Column(name = "contents", nullable = false)
 	private String contents;
@@ -50,22 +44,6 @@ public class BlogContents implements Serializable {
 
 	public void setSeq(Long seq) {
 		this.seq = seq;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getSubTitle() {
-		return subTitle;
-	}
-
-	public void setSubTitle(String subTitle) {
-		this.subTitle = subTitle;
 	}
 
 	public String getContents() {
