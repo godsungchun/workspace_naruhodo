@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+		xmlns="http://www.springframework.org/schema/security"
+		xmlns:beans="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<beans:bean id="logoutSuccessHandler"
+				class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/" />
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
+	</beans:bean>
+	
+	<beans:bean id="userDetailsService" class="com.godsungchun.spring.security.AccountUserDetailService"/>
+	
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="passwordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/logout" access="permitAll"/>
+		<intercept-url pattern="/favicon.ico" access="permitAll"/>
+		<intercept-url pattern="/resources/**" access="permitAll"/>
+		<intercept-url pattern="/webjar/**" access="permitAll"/>
+		<intercept-url pattern="/rest/auth/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="authenticated"/>
+		
+		<form-login login-page="/login" always-use-default-target="true" default-target-url="/main/index" username-parameter="signInId" password-parameter="pwd"/>
+		
+		<logout logout-url="/logout" invalidate-session="true" success-handler-ref="logoutSuccessHandler" delete-cookies="JSESSIONID"/>
+		
+		<session-management session-fixation-protection="migrateSession">
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
+		</session-management>
+	</http>
+</beans:beans>
