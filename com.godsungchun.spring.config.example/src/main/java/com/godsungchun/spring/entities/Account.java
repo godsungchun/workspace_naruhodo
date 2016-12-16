@@ -24,7 +24,7 @@ public class Account implements Serializable {
 	@Column
 	private String email;
 	
-	@Column(length = 50)
+	@Column(length = 50, unique = true)
 	private String signInId;
 	
 	public static long getSerialVersionUID() {

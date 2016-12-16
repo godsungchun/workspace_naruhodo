@@ -42,12 +42,12 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
 
-		/*DelegatingFilterProxy securityFilterChain = new DelegatingFilterProxy("springSecurityFilterChain");
-		*/
+		DelegatingFilterProxy securityFilterChain = new DelegatingFilterProxy("springSecurityFilterChain");
+		
 		MultipartFilter multipartFilter = new MultipartFilter();
 
 		HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
 
-		return new Filter[] {characterEncodingFilter, /*securityFilterChain, */multipartFilter, hiddenHttpMethodFilter};
+		return new Filter[] {characterEncodingFilter, securityFilterChain, multipartFilter, hiddenHttpMethodFilter};
 	}
 }

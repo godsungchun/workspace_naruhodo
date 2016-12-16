@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 		basePackages = "com.godsungchun.spring",
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class)
 )
-@PropertySources(value = {@PropertySource("classpath:properties/db.properties")})
 public class AppConfig {
 	@Bean(name = "messageSource")
 	public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource() {

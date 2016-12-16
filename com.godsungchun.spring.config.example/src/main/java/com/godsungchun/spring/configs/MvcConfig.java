@@ -21,8 +21,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @ComponentScan(
-	basePackages = { "com.godsungchun.spring.web" },
-	excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Service.class)
+	basePackages = { "com.godsungchun.spring.web" }
 )
 @EnableWebMvc
 @EnableSpringDataWebSupport

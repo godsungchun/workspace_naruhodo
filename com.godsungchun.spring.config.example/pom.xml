@@ -20,7 +20,8 @@
 
 		<!-- Spring -->
 		<spring-framework.version>4.3.4.RELEASE</spring-framework.version>
-
+		<spring-security.version>4.2.0.RELEASE</spring-security.version>
+		
 		<!-- Hibernate / JPA -->
 		<hibernate.version>5.2.5.Final</hibernate.version>
 		<querydsl.version>4.1.4</querydsl.version>
@@ -42,7 +43,23 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		
 		<!-- Other Web dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -130,7 +147,12 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.2.5.Final</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.3.4.Final</version>
+		</dependency>
 		<!-- http://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
