@@ -10,6 +10,6 @@ import javax.servlet.http.HttpSession;
  * Created by Dream on 2016-12-19.
  */
 public interface AuthService {
-	public void login(HttpServletRequest request, HttpServletResponse response, Account account) throws Exception;
-	public void logout(HttpSession httpSession) throws Exception;
+	void login(HttpServletRequest request, HttpServletResponse response, Account account) throws Exception;
+	void logout(HttpSession httpSession) throws Exception;
 }

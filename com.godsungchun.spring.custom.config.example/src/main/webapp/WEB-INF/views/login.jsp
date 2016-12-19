@@ -87,6 +87,7 @@
 
 <script type="text/javascript">
 	loginRestApi.contextPath = '${contextPath}';
+	login.isRest = true;
 	login.setEvent();
 	
 	$(document).ajaxSend(function(e, xhr, options) {

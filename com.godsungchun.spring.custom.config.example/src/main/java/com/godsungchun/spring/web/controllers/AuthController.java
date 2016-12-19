@@ -23,24 +23,22 @@ public class AuthController {
 	private AuthService authService;
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ConcurrentHashMap<Result.Code, Object> login(HttpServletRequest request, HttpServletResponse response, Account account) throws Exception {
+	public String login(HttpServletRequest request, HttpServletResponse response, Account account) throws Exception {
 		ConcurrentHashMap<Result.Code, Object> resultMap = new ConcurrentHashMap<>();
 		
 		authService.login(request, response, account);
 		
-		resultMap.put(Result.Code.resultCode, Result.Value.success);
-		
-		return resultMap;
+		return "main/index";
 	}
 	
 	@RequestMapping(value = "logout", method = RequestMethod.POST)
-	public ConcurrentHashMap<Result.Code, Object> logout(HttpSession httpSession) throws Exception {
+	public String logout(HttpSession httpSession) throws Exception {
 		ConcurrentHashMap<Result.Code, Object> resultMap = new ConcurrentHashMap<>();
 		
 		authService.logout(httpSession);
 		
 		resultMap.put(Result.Code.resultCode, Result.Value.success);
 		
-		return resultMap;
+		return "login";
 	}
 }

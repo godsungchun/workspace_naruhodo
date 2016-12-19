@@ -29,7 +29,7 @@
 </head>
 <body>
 	SignIn Complete.
-	<form id="frmLogout" name="frmLogout" method="post" action="/logout">
+	<form id="frmLogout" name="frmLogout" method="post" action="/auth/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	</form>
 	<button id="btnLogout">로그아웃</button>
@@ -37,6 +37,7 @@
 </html>
 
 <script type="text/javascript">
-	main.contextPath = '${contextPath}';
-	main.setEvent();
+	logoutRestApi.contextPath = '${contextPath}';
+	mainIndex.isRest = true;
+	mainIndex.setEvent();
 </script>

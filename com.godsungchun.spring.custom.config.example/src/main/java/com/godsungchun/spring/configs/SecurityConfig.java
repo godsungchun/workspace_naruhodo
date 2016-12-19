@@ -1,10 +1,12 @@
 package com.godsungchun.spring.configs;
 
 import com.godsungchun.spring.security.AccountUserDetailService;
+import com.godsungchun.spring.security.handlers.AccountAuthenticationFailureHandler;
+import com.godsungchun.spring.security.handlers.AccountAuthenticationSuccessHandler;
+import com.godsungchun.spring.security.handlers.AccountLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.session.*;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
@@ -70,12 +73,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CompositeSessionAuthenticationStrategy sas() {
 		ConcurrentSessionControlAuthenticationStrategy concurrentSessionControlAuthenticationStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry());
-		
 		concurrentSessionControlAuthenticationStrategy.setMaximumSessions(1);
 		concurrentSessionControlAuthenticationStrategy.setExceptionIfMaximumExceeded(true);
 		
 		SessionFixationProtectionStrategy sessionFixationProtectionStrategy = new SessionFixationProtectionStrategy();
-		sessionFixationProtectionStrategy.setMigrateSessionAttributes(true);
 		
 		RegisterSessionAuthenticationStrategy sessionAuthenticationStrategy = new RegisterSessionAuthenticationStrategy(sessionRegistry());
 		
@@ -99,10 +100,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 					.authenticated()
 				.and()
-					.formLogin().loginPage("/auth/login").permitAll().usernameParameter("signInId").passwordParameter("pwd")
+					.formLogin()
+					.loginPage("/login").permitAll()
+					.usernameParameter("signInId")
+					.passwordParameter("pwd")
+					.successForwardUrl("/main/index")
+					.failureForwardUrl("/login")
+					/*.loginProcessingUrl("/auth/login")*/
+					.successHandler(new AccountAuthenticationSuccessHandler("/main/index")).failureHandler(new AccountAuthenticationFailureHandler("/login"))
 				.and()
-					.logout()
-					.logoutUrl("/auth/logout").permitAll()
+					.logout().logoutSuccessHandler(new AccountLogoutSuccessHandler(sessionRegistry()))
+					.logoutUrl("/auth/logout").deleteCookies("JSESSIONID").permitAll()
 				.and()
 					.sessionManagement()
 					.sessionAuthenticationStrategy(sas());

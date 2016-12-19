@@ -38,6 +38,7 @@
 
 <!-- jQuery -->
 <script src="${contextPath}/resources/libs/jquery/jquery-3.1.1.min.js?rd=${now}"></script>
+<script src="${contextPath}/resources/libs/jquery/form/jquery.form.min.js?rd=${now}"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="${contextPath}/resources/libs/bootstrap/js/bootstrap.min.js?rd=${now}"></script>

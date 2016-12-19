@@ -2,33 +2,37 @@
  * Created by Dream on 2016-12-16.
  */
 
-var main = {
+var mainIndex = {
 	contextPath: null,
+	isRest: false,
 	setEvent: function () {
+		var self = this;
+		
 		$('#btnLogout').click(function () {
-			$('#frmLogout').submit();
-		})
+			if (self.isRest == false) {
+				$('#frmLogout').submit();
+			} else {
+				logoutRestApi.proc();
+			}
+			
+		});
 	}
 };
 
-var loginRestApi = {
+var logoutRestApi = {
 	contextPath: null,
 	proc: function () {
 		var self = this;
 		
-		$("#loginForm").ajaxSubmit({
-			url: self.contextPath + '/rest/auth/login',
+		$("#frmLogout").ajaxSubmit({
+			url: self.contextPath + '/rest/auth/logout',
 			type: 'post',
 			beforeSubmit: function (arr, $form, options) {
 				
 			},
 			success: function (data) {
 				if (data['resultCode'] == 'success') {
-					location.href = '/user/getUserView';
-				} else if (data['resultCode'] == 'maximumExceeded') {
-					alert("이미 로그인한 사용자가 있습니다.");
-				} else {
-					alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+					location.href = '/login';
 				}
 			},
 			error: function (error) {

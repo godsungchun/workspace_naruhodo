@@ -2,12 +2,22 @@
  * Created by Dream on 2016-11-16.
  */
 var login = {
+	isRest: false,
 	setEvent: function () {
 		var self = this;
 		
 		$('#btnLogin').on("click", function(){
 			// loginRestApi.proc();
-			loginRestApi.proc();
+			// loginRestApi.proc();
+			alert(0)
+			if (self.isRest == true) {
+				alert(1)
+				loginRestApi.proc();
+			} else {
+				alert(2)
+				$('#frmLogin').submit();
+			}
+			
 		});
 		
 		$('#txtSignInId').on('keypress', function (e) {

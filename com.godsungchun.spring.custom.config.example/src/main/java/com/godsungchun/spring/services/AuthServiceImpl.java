@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.context.SecurityContextRepository;
@@ -49,6 +50,13 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Override
 	public void logout(HttpSession httpSession) throws Exception {
+		String sessionId = httpSession.getId();
 		httpSession.invalidate();
+		
+		SessionInformation sessionInformation = sessionRegistry.getSessionInformation(sessionId);
+		
+		if (sessionInformation != null) {
+			sessionRegistry.getSessionInformation(httpSession.getId()).expireNow();
+		}
 	}
 }
