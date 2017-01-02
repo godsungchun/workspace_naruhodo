@@ -1,5 +1,6 @@
 package com.godsungchun.spring.configs;
 
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -32,6 +33,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	
 	@Override
 	protected void registerDispatcherServlet(ServletContext servletContext) {
+		servletContext.addListener(new HttpSessionEventPublisher());
 		super.registerDispatcherServlet(servletContext);
 	}
 	
