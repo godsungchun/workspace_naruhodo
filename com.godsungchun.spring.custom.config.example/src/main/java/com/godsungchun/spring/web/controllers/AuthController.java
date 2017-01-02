@@ -28,6 +28,8 @@ public class AuthController {
 		
 		authService.login(request, response, account);
 		
+		resultMap.put(Result.Code.resultCode, Result.Value.success);
+		
 		return "main/index";
 	}
 	

@@ -9,12 +9,9 @@ var login = {
 		$('#btnLogin').on("click", function(){
 			// loginRestApi.proc();
 			// loginRestApi.proc();
-			alert(0)
 			if (self.isRest == true) {
-				alert(1)
 				loginRestApi.proc();
 			} else {
-				alert(2)
 				$('#frmLogin').submit();
 			}
 			
